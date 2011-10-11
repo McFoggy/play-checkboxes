@@ -1,0 +1,42 @@
+h1. play-checkboxes: easily handle checkboxes with playframework
+
+h2. Description
+
+This project provides a FastTag that ease handling checkboxes rendering within your web application.
+
+Its usage is quite simple
+<pre><code>
+    <form method="get" action="/someAction">
+    #{input.checkboxes all:myItemsList /}
+    <input type="submit"/>
+    </form>
+</code></pre>
+
+Or it can be configured a bit more
+<pre><code>
+    <form method="get" action="/someAction">
+    #{input.checkboxes all:myItemsList, selected:alreadySelectedItemsList, basename="lstSelection", value="propertyOne", text="propertyTwo"/}
+    <input type="submit"/>
+    </form>
+</code></pre>
+
+h2. Tag Parameters
+
+h3. "all": Mandatory 
+This parameter references the list of items to be rendered as checkboxes.
+This parameter must implement java.util.List.
+
+h3. "selected": Optional
+This parameter references the list of items that must be initially selected.
+This parameter must implement java.util.List.
+An element E of the "all" list will be intially rendered as checked if selected.contains(E) is true.
+
+h3. "basename": Optional
+This attribute is used to set the name used inside the input HTML tag.
+By default the base name is: 'selected', so that checkboxes will be named: selected \[1\], selected\[2\], ..., selected\[n\] 
+
+h3. "value": Optional
+
+h3. "text": Optional
+
+
