@@ -23,15 +23,18 @@ Or it can be configured a bit more
 h2. Tag Parameters
 
 h3. "all": Mandatory 
+
 This parameter references the list of items to be rendered as checkboxes.
 This parameter must implement java.util.List.
 
 h3. "selected": Optional
+
 This parameter references the list of items that must be initially selected.
 This parameter must implement java.util.List.
 An element E of the "all" list will be intially rendered as checked if selected.contains(E) is true.
 
 h3. "basename": Optional
+
 This attribute is used to set the name used inside the input HTML tag.
 By default the base name is: 'selected', so that checkboxes will be named: selected \[1\], selected\[2\], ..., selected\[n\] 
 
