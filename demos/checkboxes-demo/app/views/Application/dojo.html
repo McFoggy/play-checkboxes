@@ -1,0 +1,15 @@
+#{extends 'main.html' /}
+#{set title:'Home' /}
+
+<h1>Checkboxes with DOJO : ${date}</h1>
+#{set 'moreScripts'}
+	<script src="@{'/public/javascripts/dojo-1.6.1.min.js'}" type="text/javascript" charset="utf-8"></script>
+	<script src="@{'/public/javascripts/checkboxes.js'}" type="text/javascript" charset="utf-8"></script>
+#{/set}
+
+<div>
+	<form method="get" action="/jquery">
+		#{input.checkboxes all:items, selected:selected/}
+		<input type="submit"/>
+	</form>
+</div>  

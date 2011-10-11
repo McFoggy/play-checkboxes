@@ -1,0 +1,17 @@
+Person(1):
+    id:             1
+    firstname:      Han
+    lastname:       Solo
+    age:            25
+
+Person(2):
+    id:             2
+    firstname:      Luke
+    lastname:       Skywalker
+    age:            20
+
+Person(3):
+    id:             3
+    firstname:      Dark
+    lastname:       Vador
+    age:            40

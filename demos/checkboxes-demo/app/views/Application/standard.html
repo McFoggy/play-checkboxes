@@ -1,0 +1,16 @@
+#{extends 'main.html' /}
+#{set title:'Home' /}
+
+<h1>Checkboxes with Standard DOM Features : ${date}</h1>
+#{set 'moreScripts'}
+	<script src="@{'/public/javascripts/checkboxes.js'}" type="text/javascript" charset="utf-8"></script>
+#{/set}
+
+<h2>TODO</h2>
+
+<div>
+	<form method="get" action="/jquery">
+		#{input.checkboxes all:items, selected:selected/}
+		<input type="submit"/>
+	</form>
+</div>  
