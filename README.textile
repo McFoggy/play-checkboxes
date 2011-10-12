@@ -31,12 +31,14 @@ h3. "selected": Optional
 
 This parameter references the list of items that must be initially selected.
 This parameter must implement java.util.List.
-An element E of the "all" list will be intially rendered as checked if selected.contains(E) is true.
+An element E of the values list will be initially rendered as checked if selected.contains(E) is true.
 
 h3. "all-none": Optional
 
 Boolean parameter controlling the addition of a "All/None" checkbox, that will automatically select/deselect the other checkboxes.
-Default value is true, so the additional checkbox will be created by default. 
+Default value is true, so the additional checkbox will be created by default.
+
+To have the automatic select/unselect behaviour, please include also the "checkboxes.js" file.
 
 h3. "value": Optional
 
