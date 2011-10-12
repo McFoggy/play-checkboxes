@@ -10,7 +10,7 @@
 <div>
 	<h2>default rendering toString</h2>
 	<form method="get" action="/persons">
-		#{input.checkboxes all:items, selected:selected, basename:"selectedPersons", value:"id" /}
+		#{input.checkboxes values:items, selected:selected, basename:"selectedPersons", value:"id" /}
 		<input type="submit"/>
 	</form>
 </div>  
@@ -18,7 +18,15 @@
 <div>
 	<h2>rendering is done using specific property: fullname</h2>
 	<form method="get" action="/persons">
-		#{input.checkboxes all:items, selected:selected, basename:"selectedPersons", value:"id", text:"fullname" /}
+		#{input.checkboxes values:items, selected:selected, basename:"selectedPersons", value:"id", text:"fullname" /}
 		<input type="submit"/>
 	</form>
+</div>  
+
+<div>
+    <h2>rendering is done using specific property: lastname and without "All/None" checkbox</h2>
+    <form method="get" action="/persons">
+        #{input.checkboxes values:items, selected:selected, basename:"selectedPersons", value:"id", text:"lastname", "all-none":false /}
+        <input type="submit"/>
+    </form>
 </div>  

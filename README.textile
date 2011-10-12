@@ -22,7 +22,7 @@ Or it can be configured a bit more
 
 h2. Tag Parameters
 
-h3. "all": Mandatory 
+h3. "values": Mandatory 
 
 This parameter references the list of items to be rendered as checkboxes.
 This parameter must implement java.util.List.
@@ -33,13 +33,33 @@ This parameter references the list of items that must be initially selected.
 This parameter must implement java.util.List.
 An element E of the "all" list will be intially rendered as checked if selected.contains(E) is true.
 
+h3. "all-none": Optional
+
+Boolean parameter controlling the addition of a "All/None" checkbox, that will automatically select/deselect the other checkboxes.
+Default value is true, so the additional checkbox will be created by default. 
+
+h3. "value": Optional
+
+This attribute is used to set the attribute 'value' inside the input HTML tag.
+If not provided then a toString will be performed on the element to set the value.
+If you bind for exemple entities, it would be better to set this attribute to the one defined as @Id inside your entity object.
+
+h3. "text": Optional
+
+This attribute is used to define the text that will be rendered inside the input HTML tag.
+If not provided then a toString will be eprformed on the element to set the text. 
+
 h3. "basename": Optional
 
 This attribute is used to set the name used inside the input HTML tag.
 By default the base name is: 'selected', so that checkboxes will be named: selected \[1\], selected\[2\], ..., selected\[n\] 
 
-h3. "value": Optional
+h3. "property": Optional
 
-h3. "text": Optional
+This attribute is used to map a specific attribute when binding has to be done on a complex object.
+For example, using a default basename and setting this attribute to 'id', the checkboxes will be named: selected\[1\].id, selected\[2\].id, ..., selected\[n\].id
 
-
+This will let you bind the id attribute a class, so that your controller look like:
+<pre><code>   public static checked(List<MyObject> selected)</code></pre>
+Where the MyObject class defines an 'id' attribute.
+  

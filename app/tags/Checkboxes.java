@@ -10,6 +10,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import play.Logger;
 import play.templates.FastTags;
 import play.templates.JavaExtensions;
 import play.templates.GroovyTemplate.ExecutableTemplate;
@@ -17,6 +18,20 @@ import play.templates.GroovyTemplate.ExecutableTemplate;
 
 @FastTags.Namespace("input")
 public class Checkboxes extends play.templates.FastTags {
+	private static final String ATT_VALUES = "values";
+	private static final String ATT_SELECTED = "selected";
+	private static final String ATT_BASE_NAME = "basename";
+	private static final String ATT_PROPERTY = "property";
+	private static final String ATT_VALUE = "value";
+	private static final String ATT_TEXT = "text";
+	private static final String ATT_ALL_NONE = "all-none";
+	
+	private static final String INPUT_TAG_VALUE = "value";
+	private static final String INPUT_TAG_TEXT = "text";
+	private static final String INPUT_TAG_NAME = "name";
+	private static final String INPUT_TAG_SELECTED = "selected";
+
+	private static final String DEFAULT_BASE_NAME = "selected";
 	/**
 	 * 
 	 * @param args
@@ -26,32 +41,44 @@ public class Checkboxes extends play.templates.FastTags {
 	 * @param fromLine
 	 */
 	public static void _checkboxes(Map<?, ?> args, Closure body, PrintWriter out, ExecutableTemplate template, int fromLine) {
-		List<?> all = (List<?>) args.get("all");
-		List<?> selected = (List<?>) args.get("selected");
+		List<?> all = (List<?>) args.get(ATT_VALUES);
+		List<?> selected = (List<?>) args.get(ATT_SELECTED);
 		selected = (selected==null)?Collections.emptyList():selected;
 		
-		String baseName = (args.get("basename")==null)?"selected":(String)args.get("basename");
-		String property = (String) args.get("property");
+		Boolean allNone = Boolean.TRUE;
+		Object allNoneObject = args.get(ATT_ALL_NONE);
+		if (allNoneObject instanceof Boolean) {
+			allNone = (Boolean) allNoneObject;
+		} else if (allNoneObject instanceof String) {
+			allNone = Boolean.valueOf((String) allNoneObject);
+		} else if (allNoneObject != null) {
+			// neither a Boolean nor a String, we ommit it
+			Logger.warn("cannot detect a boolean value for attribute[%s], given value is: %s", ATT_ALL_NONE, allNoneObject);
+		}
 		
-		String fieldValue = (String) args.get("value");
-		String fieldText = (String) args.get("text");
+		String baseName = (args.get(ATT_BASE_NAME)==null)?DEFAULT_BASE_NAME:(String)args.get(ATT_BASE_NAME);
+		String property = (String) args.get(ATT_PROPERTY);
+		String fieldValue = (String) args.get(ATT_VALUE);
+		String fieldText = (String) args.get(ATT_TEXT);
 		
 		Map<String, Object> properties = new HashMap<String, Object>();
 
 		int i = 0;
-		String keyForObjectValue = "value";
-		String keyForObjectText = "text";
 		out.println("<fieldset class=\"checkboxes\">");
+		
 		for (Object obj : all) {
-			fillProperty(fieldValue, properties, keyForObjectValue, obj);
-			fillProperty(fieldText, properties, keyForObjectText, obj);
-			properties.put("name", baseName + "[" + i + "]" + ((property==null)?"":"."+property));
-			properties.put("selected", Boolean.valueOf(selected.contains(obj)));
+			fillProperty(fieldValue, properties, INPUT_TAG_VALUE, obj);
+			fillProperty(fieldText, properties, INPUT_TAG_TEXT, obj);
+			properties.put(INPUT_TAG_NAME, baseName + "[" + i + "]" + ((property==null)?"":"."+property));
+			properties.put(INPUT_TAG_SELECTED, Boolean.valueOf(selected.contains(obj)));
 			
 			writeCheckBox(out, properties);
 			i++;
 		}
-		writeAllNoneCheckboxes(out, selected.containsAll(all));
+		
+		if (allNone) {
+			writeAllNoneCheckboxes(out, selected.containsAll(all));
+		}
 		out.println("</fieldset>");
 	}
 
@@ -60,13 +87,13 @@ public class Checkboxes extends play.templates.FastTags {
 	}
 
 	private static void writeCheckBox(PrintWriter out, Map<String, Object> properties) {
-		Boolean selected = (Boolean) properties.get("selected");
+		Boolean selected = (Boolean) properties.get(INPUT_TAG_SELECTED);
 		out.println(
 			String.format("<input type=\"checkbox\" name=\"%s\" value=\"%s\" %s>%s</input>"
-					, properties.get("name")
-					, properties.get("value")
+					, properties.get(INPUT_TAG_NAME)
+					, properties.get(INPUT_TAG_VALUE)
 					, selected.booleanValue()?"checked=\"checked\"":""
-					, properties.get("text")
+					, properties.get(INPUT_TAG_TEXT)
 			)
 		);
 	}
